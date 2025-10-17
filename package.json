@@ -1,0 +1,10 @@
+{
+  "name": "jscord",
+  "version": "0.0.1",
+  "main": "src/index.js",
+  "type": "module",
+  "dependencies": {
+    "ws": "^8.16.0",
+    "node-fetch": "^3.3.2"
+  }
+}
