@@ -1,3 +1,14 @@
-import { Client } from "./client.js";
+export class Jscord {
+  constructor(token) {
+    this.token = token;
+  }
 
-export class Jscord extends Client {}
+  login() {
+    console.log(`[JSCORD] Logged in with token: ${this.token}`);
+  }
+
+  on(event, handler) {
+    console.log(`[JSCORD] Listening to ${event}`);
+    if (event === "ready") handler();
+  }
+}
