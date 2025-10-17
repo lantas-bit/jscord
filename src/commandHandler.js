@@ -1,24 +1,18 @@
-export function handleCommand(client, msg) {
-  if (!msg.content || !msg.content.startsWith("!")) return;
+export function handleCommand(client, message) {
+  const content = message.content.trim();
+  const prefix = client.prefix;
 
-  const args = msg.content.slice(1).split(/ +/);
-  const cmd = args.shift().toLowerCase();
+  if (!content.startsWith(prefix)) return;
 
-  const run = client.commands.get(cmd);
-  if (run) {
-    run({
-      reply: (content) => {
-        fetch(`https://discord.com/api/v10/channels/${msg.channel_id}/messages`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bot ${client.token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ content }),
-        });
-      },
-      message: msg,
-      args,
-    });
-  }
+  const args = content.slice(prefix.length).split(/ +/);
+  const commandName = args.shift().toLowerCase();
+
+  const command = client.commands.get(`${prefix}${commandName}`);
+  if (!command) return;
+
+  const reply = async (text) => {
+    await client.sendMessage(message.channel_id, text);
+  };
+
+  command({ message, args, reply, client });
 }
