@@ -1,6 +1,7 @@
 import WebSocket from "ws";
 import fetch from "node-fetch";
 import { handleCommand } from "./commandHandler.js";
+export { Client } from "./client.js";
 
 export class Jscord {
   constructor(token, options = {}) {
